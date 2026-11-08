@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Surprise For Ana ❤️</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: radial-gradient(circle at center, #251044, #080312);
+    color: white;
+    font-family: Georgia, serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+#stars, #fx {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+#stars { z-index: 0; }
+#fx { z-index: 5; }
+
+.scene {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.card {
+    width: 100%;
+    max-width: 450px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.gold {
+    color: #ffd875;
+    text-shadow: 0 0 15px #ffb000, 0 0 35px #ff8c00;
+}
+
+.small {
+    color: #eacb99;
+    letter-spacing: 4px;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-size: clamp(36px, 10vw, 55px);
+    line-height: 1.2;
+    margin: 20px 0;
+}
+
+button {
+    padding: 17px 30px;
+    border: 1px solid #ffe5a1;
+    border-radius: 40px;
+    background: linear-gradient(120deg, #b76b13, #ffe39a, #c47b19);
+    color: #321400;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 0 25px #ffad35;
+    margin-top: 30px;
+}
+
+button:active {
+    transform: scale(.94);
+}
+
+.envelope {
+    font-size: 100px;
+    margin: 30px 0;
+    filter: drop-shadow(0 0 25px orange);
+    animation: float 3s infinite ease-in-out;
+}
+
+@keyframes float {
+    50% {
+        transform: translateY(-15px) rotate(4deg);
+    }
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#opening {
+    animation: fadein 2s ease;
+}
+
+#count {
+    font-size: 120px;
+    font-weight: bold;
+    color: #ffd875;
+    text-shadow: 0 0 40px orange;
+    animation: pulse .8s infinite;
+}
+
+@keyframes pulse {
+    50% {
+        transform: scale(1.2);
+        filter: brightness(1.7);
+    }
+}
+
+/* Explosion */
+
+.shake {
+    animation: shake .12s infinite;
+}
+
+@keyframes shake {
+    0% { transform: translate(0); }
+    25% { transform: translate(5px,-4px); }
+    50% { transform: translate(-5px,3px); }
+    75% { transform: translate(3px,4px); }
+}
+
+#flash {
+    position: fixed;
+    inset: 0;
+    background: white;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.blast {
+    animation: blast .9s ease-out;
+}
+
+@keyframes blast {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Curtains - FIXED */
+
+.curtain {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    z-index: 8;
+    background: linear-gradient(
+        90deg,
+        #3b0619,
+        #a33120,
+        #4b091c
+    );
+    transition: transform 1.8s cubic-bezier(.7,0,.2,1);
+    pointer-events: none;
+}
+
+#left {
+    left: 0;
+    transform: translateX(-101%);
+}
+
+#right {
+    right: 0;
+    transform: translateX(101%);
+}
+
+#left.open {
+    transform: translateX(0);
+}
+
+#right.open {
+    transform: translateX(0);
+}
+
+/* Main reveal */
+
+#reveal {
+    opacity: 0;
+    transform: scale(.7);
+    transition: all 1.5s cubic-bezier(.2,.8,.2,1);
+}
+
+#reveal.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.wish {
+    color: #ffe9bd;
+    line-height: 1.9;
+    font-size: 17px;
+    margin-top: 20px;
+}
+
+.signature {
+    margin-top: 25px;
+    font-size: 21px;
+    color: #ffd875;
+    text-shadow: 0 0 15px orange;
+}
+
+.diyas {
+    font-size: 38px;
+    margin: 18px;
+    animation: float 3s infinite;
+}
+
+.heart {
+    position: fixed;
+    bottom: -40px;
+    font-size: 25px;
+    animation: rise 6s linear forwards;
+    pointer-events: none;
+    z-index: 4;
+}
+
+@keyframes rise {
+    to {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="stars"></canvas>
+<canvas id="fx"></canvas>
+
+<div id="flash"></div>
+
+<div class="curtain" id="left"></div>
+<div class="curtain" id="right"></div>
+
+
+<!-- OPENING SCREEN -->
+
+<section class="scene" id="opening">
+
+    <div class="card">
+
+        <div class="small">
+            A little magic, made with love
+        </div>
+
+        <div class="envelope">💌</div>
+
+        <h1 class="gold">
+            Hey, Ana ❤️
+        </h1>
+
+        <p style="color:#e8d5b5;line-height:1.9">
+            Tonight, I have something special<br>
+            that I made just for you.
+        </p>
+
+        <button onclick="ignite()">
+            UNLOCK YOUR SURPRISE ✨
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- COUNTDOWN SCREEN -->
+
+<section class="scene hidden" id="countdown">
+
+    <div class="card">
+
+        <div class="small">
+            Something magical is coming
+        </div>
+
+        <div id="count">7</div>
+
+        <h2 class="gold">
+            Get ready, beautiful ❤️
+        </h2>
+
+        <p style="color:#e8d5b5;margin-top:20px">
+            A little Diwali magic is on its way...
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- FINAL SURPRISE -->
+
+<section class="scene hidden" id="reveal">
+
+    <div class="card">
+
+        <div class="diyas">
+            🪔 ✨ 🪔
+        </div>
+
+        <div class="small">
+            A celebration of light and love
+        </div>
+
+        <h1 class="gold">
+            HAPPY<br>
+            DIWALI
+        </h1>
+
+        <h1 style="color:#ff8eaf;font-size:43px">
+            MY ANA ❤️
+        </h1>
+
+        <div class="diyas">
+            🌸 🪔 🌸
+        </div>
+
+        <div class="wish">
+
+            May your life sparkle brighter<br>
+            than a thousand stars. ✨<br><br>
+
+            May every diya bring you happiness,<br>
+            every prayer bring you peace,<br>
+            and every new day bring you closer<br>
+            to everything your heart wishes for.<br><br>
+
+            And if I get one wish this Diwali,<br>
+            I would ask God to always protect<br>
+            that beautiful smile of yours. ❤️
+
+        </div>
+
+        <div class="signature">
+            You are my favourite blessing. ❤️
+        </div>
+
+        <p style="margin-top:20px;color:#d9b989">
+            Forever sending you love. 🫶
+        </p>
+
+        <div style="font-size:30px;margin-top:20px">
+            ❤️ 🪔 ❤️
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* STAR BACKGROUND */
+
+const starCanvas = document.getElementById("stars");
+const starCtx = starCanvas.getContext("2d");
+
+const canvas = document.getElementById("fx");
+const ctx = canvas.getContext("2d");
+
+function resize() {
+    starCanvas.width = canvas.width = innerWidth;
+    starCanvas.height = canvas.height = innerHeight;
+}
+
+resize();
+
+window.addEventListener("resize", resize);
+
+let stars = Array.from({length:120}, () => ({
+    x:Math.random()*innerWidth,
+    y:Math.random()*innerHeight,
+    r:Math.random()*2,
+    a:Math.random()
+}));
+
+function drawStars() {
+
+    starCtx.clearRect(0,0,innerWidth,innerHeight);
+
+    stars.forEach(s => {
+
+        s.a += .02;
+
+        starCtx.fillStyle =
+        `rgba(255,220,160,${.3+Math.abs(Math.sin(s.a))*.7})`;
+
+        starCtx.beginPath();
+        starCtx.arc(s.x,s.y,s.r,0,Math.PI*2);
+        starCtx.fill();
+
+    });
+
+    requestAnimationFrame(drawStars);
+}
+
+drawStars();
+
+
+/* FIREWORK PARTICLES */
+
+let particles = [];
+
+function burst(x,y) {
+
+    for(let i=0;i<100;i++) {
+
+        let angle = Math.random()*Math.PI*2;
+        let speed = Math.random()*7+2;
+
+        particles.push({
+            x,y,
+            vx:Math.cos(angle)*speed,
+            vy:Math.sin(angle)*speed,
+            life:100,
+            color:`hsl(${Math.random()*60+15},100%,65%)`,
+            size:Math.random()*4+2
+        });
+
+    }
+
+}
+
+function fireworks() {
+
+    burst(
+        Math.random()*innerWidth,
+        Math.random()*innerHeight*.65
+    );
+
+}
+
+function animate() {
+
+    ctx.clearRect(0,0,innerWidth,innerHeight);
+
+    particles.forEach((p,i) => {
+
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += .035;
+        p.life--;
+
+        ctx.globalAlpha = p.life/100;
+        ctx.fillStyle = p.color;
+
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+        ctx.fill();
+
+        if(p.life<=0) {
+            particles.splice(i,1);
+        }
+
+    });
+
+    ctx.globalAlpha=1;
+
+    requestAnimationFrame(animate);
+}
+
+animate();
+
+
+/* TICKING SOUND */
+
+let audio;
+
+function tick() {
+
+    try {
+
+        audio = audio ||
+        new (window.AudioContext || window.webkitAudioContext)();
+
+        if(audio.state==="suspended") {
+            audio.resume();
+        }
+
+        let osc = audio.createOscillator();
+        let gain = audio.createGain();
+
+        osc.connect(gain);
+        gain.connect(audio.destination);
+
+        osc.frequency.value=700;
+
+        gain.gain.setValueAtTime(.08,audio.currentTime);
+
+        gain.gain.exponentialRampToValueAtTime(
+            .001,
+            audio.currentTime+.12
+        );
+
+        osc.start();
+        osc.stop(audio.currentTime+.13);
+
+    } catch(e) {}
+
+}
+
+
+/* START COUNTDOWN */
+
+let started=false;
+
+function ignite() {
+
+    if(started) return;
+
+    started=true;
+
+    document.getElementById("opening").classList.add("hidden");
+
+    document.getElementById("countdown").classList.remove("hidden");
+
+    let n=7;
+
+    let count=document.getElementById("count");
+
+    let interval=setInterval(() => {
+
+        tick();
+
+        n--;
+
+        count.textContent=n;
+
+        if(n===0) {
+
+            clearInterval(interval);
+
+            explode();
+
+        }
+
+    },1000);
+
+}
+
+
+/* EXPLOSION AND REVEAL */
+
+function explode() {
+
+    document.body.classList.add("shake");
+
+    let flash=document.getElementById("flash");
+
+    flash.classList.add("blast");
+
+    burst(innerWidth/2,innerHeight/2);
+
+    for(let i=0;i<7;i++) {
+
+        setTimeout(fireworks,i*180);
+
+    }
+
+    setTimeout(() => {
+
+        document.body.classList.remove("shake");
+
+        flash.classList.remove("blast");
+
+        document.getElementById("countdown").classList.add("hidden");
+
+        document.getElementById("left").classList.add("open");
+
+        document.getElementById("right").classList.add("open");
+
+        let reveal=document.getElementById("reveal");
+
+        reveal.classList.remove("hidden");
+
+        setTimeout(() => {
+
+            reveal.classList.add("show");
+
+        },100);
+
+        setInterval(fireworks,850);
+
+        setInterval(createHeart,500);
+
+    },900);
+
+}
+
+
+/* FLOATING HEARTS */
+
+function createHeart() {
+
+    let heart=document.createElement("div");
+
+    heart.className="heart";
+
+    heart.textContent=[
+        "❤️","💖","✨","🌸","🪔"
+    ][Math.floor(Math.random()*5)];
+
+    heart.style.left=Math.random()*100+"vw";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(),6000);
+
+}
+
+</script>
+
+</body>
+</html>
